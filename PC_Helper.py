@@ -18,6 +18,9 @@ while answer != 'Q':
         print(" [2] - information about system")
         print(" [3] - list of PIDs")
         print(" [4] - duplicate files in current directory")
+        print(" [5] - duplicate specified file")
+        print(" [6] - delete duplicate files")
+        
         do = int(input("number of action: "))
         
         if do  == 1:
@@ -36,9 +39,27 @@ while answer != 'Q':
             file_list = os.listdir()
             i = 0
             while i < len(file_list):
-                newfile = file_list[i] + '.dupl'
-                shutil.copy(file_list[i], newfile)
+                if os.path.isfile(file_list[i]):
+                    newfile = file_list[i] + '.dupl'
+                    shutil.copy(file_list[i], newfile)
                 i += 1
+        elif do == 5:
+             print("duplicate specified file: ")
+             filename = input("Write file name: ")
+             if os.path.isfile(filename):
+                    newfile = filename + '.dupl'
+                    shutil.copy(filename, newfile)           
+        
+        elif do == 6:
+             print("delete duplicate files: ")
+             dirname = input("Write directory name: ")
+             file_list = os.listdir(dirname)
+             i = 0
+             while i < len(file_list):
+                 fullname = os.path.join(dirname, file_list[i])
+                 if fullname.endswith('.dupl'):
+                     os.remove(fullname)
+                 i += 1    
         else:
             pass
     elif answer == 'N':
